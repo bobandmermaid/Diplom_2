@@ -14,17 +14,17 @@ def create_user_payload():
         faker = Faker()
         payload = {}
         if name == 'rand':
-            payload["name"] = faker.name()
+            payload['name'] = faker.name()
         elif name is not None:
-            payload["name"] = name
+            payload['name'] = name
         if password == 'rand':
-            payload["password"] = faker.pyint()
+            payload['password'] = faker.pyint()
         elif password is not None:
-            payload["password"] = password
+            payload['password'] = password
         if email == 'rand':
-            payload["email"] = faker.email()
+            payload['email'] = faker.email()
         elif email is not None:
-            payload["email"] = email
+            payload['email'] = email
         return payload
 
     return _create_user_payload

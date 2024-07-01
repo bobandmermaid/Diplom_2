@@ -9,17 +9,17 @@ from reqs.requests_user import RequestsUser
 class TestCreateUser:
     @allure.title('Проверка, что можно создать пользователя со случайным логином')
     def test_create_user(self, create_user_payload, del_user):
-        payload = create_user_payload(email='rand', password='1234', name='rand')
+        payload = create_user_payload(email='rand', password='0987', name='rand')
         user = RequestsUser().post_create_user(data=payload)
-        del_user.update({'token': user["text"]['accessToken']})
-        assert user["status_code"] == 200 and user["text"]["success"]
+        del_user.update({'token': user['text']['accessToken']})
+        assert user['status_code'] == 200 and user['text']['success']
 
     @allure.title('Проверка, что нельзя создать двух пользователей с одинаковыми логинами')
     def test_create_user_same_login(self, create_user_payload, make_user):
-        payload = create_user_payload(email='rand', password='1234', name='rand')
+        payload = create_user_payload(email='rand', password='0987', name='rand')
         make_user(data=payload)
         resp_dupe = RequestsUser().post_create_user(data=payload)
-        assert resp_dupe["status_code"] == 403 and resp_dupe["text"]["message"] == Constants.ERROR_USER_EXISTS
+        assert resp_dupe['status_code'] == 403 and resp_dupe['text']['message'] == Constants.ERROR_USER_EXISTS
 
     @pytest.mark.parametrize("payload_schema",
                              [
@@ -32,4 +32,4 @@ class TestCreateUser:
         payload = create_user_payload(email=payload_schema[0], password=payload_schema[1],
                                       name=payload_schema[2])
         resp = RequestsUser().post_create_user(data=payload)
-        assert resp["status_code"] == 403 and resp["text"]["message"] == Constants.ERROR_PASSWORD_EMAIL_NAME_REQ
+        assert resp['status_code'] == 403 and resp['text']['message'] == Constants.ERROR_PASSWORD_EMAIL_NAME_REQ
